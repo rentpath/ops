@@ -6,7 +6,7 @@ module Ops
     end
 
     def version_or_branch
-      @version ||= if File.exists?(version_file)
+      @version ||= if version_file?
                      File.read(version_file).chomp.gsub('^{}', '')
                    elsif environment == 'development' && `git branch` =~ /^\* (.*)$/
                      $1
@@ -15,6 +15,7 @@ module Ops
                    end
     end
 
+    # TODO make this nicer looking - probably extract into multiple methods
     def previous_versions
       return @previous_versions if @previous_versions
       @previous_versions = []
@@ -34,32 +35,44 @@ module Ops
       @previous_versions.sort!{ |a, b| a[:time] <=> b[:time] }
     end
 
+    def file_root
+      @file_root
+    end
+
     def version_file
-      @version_file ||= File.join(@file_root, 'VERSION')
+      @version_file ||= File.join(file_root, 'VERSION')
     end
 
-    def deploy_date
-      @deploy_date ||= if File.exists?(version_file)
-        File.stat(version_file).mtime
-      elsif environment == 'development'
-        'Live'
-      else
-        'Unknown (VERSION file is missing)'
-      end
-    end
-
-    def last_commit
-      @last_commit ||= if File.exists?(revision_file)
-        File.read(revision_file).chomp
-      elsif environment == 'development' && `git show` =~ /^commit (.*)$/
-        $1
-      else
-        'Unknown (REVISION file is missing)'
-      end
+    def version_file?
+      File.exists? version_file
     end
 
     def revision_file
-      @revision_file ||= File.join(@file_root, 'REVISION')
+      @revision_file ||= File.join(file_root, 'REVISION')
+    end
+
+    def revision_file?
+      File.exists? revision_file
+    end
+
+    def deploy_date
+      @deploy_date ||= if version_file?
+                         File.stat(version_file).mtime
+                       elsif environment == 'development'
+                         'Live'
+                       else
+                         'Unknown (VERSION file is missing)'
+                       end
+    end
+
+    def last_commit
+      @last_commit ||= if revision_file?
+                         File.read(revision_file).chomp
+                       elsif environment == 'development' && `git show` =~ /^commit (.*)$/
+                         $1
+                       else
+                         'Unknown (REVISION file is missing)'
+                       end
     end
 
     def headers
