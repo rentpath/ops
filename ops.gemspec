@@ -16,6 +16,9 @@ Gem::Specification.new do |gem|
   gem.version       = Ops::VERSION
   gem.add_dependency             'haml', '~> 3.1.7'
   gem.add_dependency             'sinatra'
+  gem.add_dependency             'sinatra-respond_to'
+  gem.add_dependency             'rabl'
+  gem.add_dependency             'oj'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'rake'
 end

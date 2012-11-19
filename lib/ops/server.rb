@@ -1,8 +1,12 @@
 require 'sinatra/base'
+require 'sinatra/respond_to'
 require 'ops/server/helpers'
+require 'rabl'
 
 module Ops
   class Server < Sinatra::Base
+    Rabl.register!
+    Server.register Sinatra::RespondTo
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
     set :public_folder, "#{dir}/server/public"
@@ -20,8 +24,10 @@ module Ops
       @version = Revision.new request_headers
       @previous_versions = @version.previous_versions
       @headers = @version.headers
-      puts @headers
-      haml :version
+      respond_to do |wants|
+        wants.html { haml :version }
+        wants.json { render :rabl, :version, format: 'json' }
+      end
     end
 
     get '/heartbeat/?' do
