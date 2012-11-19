@@ -36,5 +36,6 @@ describe Ops::Revision do
     version.headers.should eq({'ABC' => '123'})
   end
 
+  # TODO: add tests for json and previous_version
 
 end
