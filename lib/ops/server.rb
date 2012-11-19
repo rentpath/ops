@@ -15,16 +15,10 @@ module Ops
       @previous_versions = @version.previous_versions
       @headers = @version.headers
       haml :version
-      #render text: Ops.check_version(request.headers)
     end
 
     get '/heartbeat/?' do
-      # TODO handle :name if it exists
       'OK'
-    end
-
-    get '/configuration/?' do
-      #render text: Ops.check_configuration
     end
   end
 end

@@ -1,18 +1,18 @@
 module Ops
   class Revision
-    def initialize(new_headers={}, opts = Ops::Config)
+    def initialize(new_headers={}, opts = Ops.config)
       @file_root = opts.file_root
       @headers = new_headers
     end
 
     def version_or_branch
       @version ||= if File.exists?(version_file)
-        File.read(version_file).chomp.gsub('^{}', '')
-      elsif environment == 'development' && `git branch` =~ /^\* (.*)$/
-        $1
-      else
-        'Unknown (VERSION file is missing)'
-      end
+                     File.read(version_file).chomp.gsub('^{}', '')
+                   elsif environment == 'development' && `git branch` =~ /^\* (.*)$/
+                     $1
+                   else
+                     'Unknown (VERSION file is missing)'
+                   end
     end
 
     def previous_versions
@@ -25,14 +25,13 @@ module Ops
           version = File.join(dir, 'VERSION')
           revision = File.join(dir, 'REVISION')
           if File.exists?(version) && File.exists?(revision)
-            @previous_versions << { :version => File.read(version).chomp.gsub('^{}', ''),
-              :revision => File.read(revision).chomp,
-              :time => File.stat(revision).mtime }
+            @previous_versions << { version: File.read(version).chomp.gsub('^{}', ''),
+              revision: File.read(revision).chomp,
+              time: File.stat(revision).mtime }
           end
         end
-        @previous_versions.sort!{ |a, b| a[:time] <=> b[:time] }
       end
-      @previous_versions
+      @previous_versions.sort!{ |a, b| a[:time] <=> b[:time] }
     end
 
     def version_file
