@@ -1,5 +1,5 @@
 require 'sinatra/base'
-require 'server/helpers'
+require 'ops/server/helpers'
 
 module Ops
   class Server < Sinatra::Base
@@ -8,21 +8,23 @@ module Ops
     set :public_folder, "#{dir}/server/public"
     set :static, true
 
-    helpers Ops::Server::Helpers
+    helpers Ops::Helpers
 
-    get '/version' do
-      @version = VersionPage.new request.headers
+    get '/version/?' do
+      @version = Revision.new request.headers
+      @previous_versions = @version.previous_versions
+      @headers = @version.headers
+      haml :version
       #render text: Ops.check_version(request.headers)
     end
 
-    get '/heartbeat(/:name)' do
-      @heartbeat = Heartbeat.new
-      #response.content_type = "text/plain"
-      #render Ops.check_heartbeat(params[:name])
+    get '/heartbeat/?' do
+      # TODO handle :name if it exists
+      'OK'
     end
 
-    get '/configuration' do
-      render text: Ops.check_configuration
+    get '/configuration/?' do
+      #render text: Ops.check_configuration
     end
   end
 end
