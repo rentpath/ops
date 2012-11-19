@@ -1,6 +1,7 @@
 module Ops
   class Revision
-    def initialize(new_headers={})
+    def initialize(new_headers={}, opts = Ops::Config)
+      @file_root = opts.file_root
       @headers = new_headers
     end
 
@@ -35,7 +36,7 @@ module Ops
     end
 
     def version_file
-      @version_file ||= File.join(file_root, 'VERSION')
+      @version_file ||= File.join(@file_root, 'VERSION')
     end
 
     def deploy_date
@@ -59,7 +60,7 @@ module Ops
     end
 
     def revision_file
-      @revision_file ||= File.join(file_root, 'REVISION')
+      @revision_file ||= File.join(@file_root, 'REVISION')
     end
 
     def headers
