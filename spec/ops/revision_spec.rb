@@ -29,4 +29,12 @@ describe Ops::Revision do
     dev_version.version_or_branch.should eq("master")
   end
 
+  it "should have request headers" do
+    headers = {'ABC' => '123', 'hidden' => 'x'}
+    settings = double("settings", {:file_root => @root, :environment => 'test'})
+    version = Ops::Revision.new(headers, settings)
+    version.headers.should eq({'ABC' => '123'})
+  end
+
+
 end
