@@ -2,6 +2,7 @@ module Ops
   class Revision
     def initialize(new_headers={}, opts = Ops.config)
       @file_root = opts.file_root
+      @environment = opts.environment
       @headers = new_headers
     end
 
@@ -37,6 +38,10 @@ module Ops
 
     def file_root
       @file_root
+    end
+
+    def environment
+      @environment
     end
 
     def version_file
