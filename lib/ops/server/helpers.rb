@@ -15,10 +15,6 @@ module Ops
                     end
     end
 
-    def environment
-      ENV['RAILS_ENV']
-    end
-
     def version_link(version)
       github_link 'tree', version
     end
@@ -28,7 +24,7 @@ module Ops
     end
 
     def github_link(resource, subresource)
-      "https://github.com/primedia/#{app_name}/#{resource}/#{subresouce}" unless subresouce =~ /^Unknown/
+      "https://github.com/primedia/#{app_name}/#{resource}/#{subresource}" unless subresource =~ /^Unknown/
     end
 
     def print_detail( object, indent = 0 )

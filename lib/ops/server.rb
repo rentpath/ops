@@ -10,10 +10,17 @@ module Ops
 
     helpers Ops::Helpers
 
+    def request_headers
+      env.each_with_object({}) do |(k,v), headers|
+        headers[k.to_sym] = v
+      end
+    end
+
     get '/version/?' do
-      @version = Revision.new request.headers
+      @version = Revision.new request_headers
       @previous_versions = @version.previous_versions
       @headers = @version.headers
+      puts @headers
       haml :version
     end
 
