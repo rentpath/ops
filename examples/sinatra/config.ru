@@ -8,10 +8,10 @@ require 'ops'
 use Rack::ShowExceptions
 
 Ops.setup do |config|
-  config.file_root = './sample_deploys/4123'
+  config.file_root = '../sample_deploys/4123'
   config.environment = ENV['RACK_ENV']
 end
 
 run Rack::URLMap.new \
   "/"       => Demo::App.new,
-  "/ops" => Ops::Server.new
+  "/ops"    => Ops::Server.new
