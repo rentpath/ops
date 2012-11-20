@@ -39,8 +39,10 @@ describe Ops::Heartbeat do
     Ops::Heartbeat.instance.add(:test){ true }
     Ops::Heartbeat.check(:test).should be true
   end
+end
 
-  it "provides convenience Ops method to add heartbeats" do
+describe Ops do
+  it "provides convenience method to add heartbeats" do
     Ops.add_heartbeat(:convenience){ true }
     Ops::Heartbeat.check(:convenience).should be true
   end
