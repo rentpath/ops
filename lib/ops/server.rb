@@ -35,7 +35,8 @@ module Ops
     end
 
     get '/heartbeat/:name/?' do
-      if Heartbeat.check params[:name]
+      name = params[:name]
+      if Heartbeat.check name
         "#{name} is OK"
       else
         status 500
