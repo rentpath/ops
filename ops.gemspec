@@ -14,7 +14,8 @@ Gem::Specification.new do |gem|
   gem.name          = "ops"
   gem.require_paths = ["lib"]
   gem.version       = Ops::VERSION
-  gem.add_dependency             'haml', '~> 3.1.7'
+  #gem.add_dependency             'haml', '~> 3.1.7'
+  gem.add_dependency             'slim'
   gem.add_dependency             'sinatra'
   gem.add_dependency             'sinatra-respond_to'
   gem.add_dependency             'rabl'
