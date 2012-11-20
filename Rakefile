@@ -10,4 +10,8 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake'
+require 'rspec/core/rake_task'
 
+RSpec::Core::RakeTask.new(:spec)
+
+task :default => :spec
