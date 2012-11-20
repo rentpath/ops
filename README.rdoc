@@ -2,11 +2,17 @@
 
 == Installation
 
-    gem install ops
++gem install ops+
 
 == Configuration
 
+Required configuration settings that MUST be set are +file_root+ and +environment+. +file_root+ should be a string containing the directory name where the +REVISION+ and +VERSION+ files can be found.
+
     Ops.config do |config|
+      config.file_root = ...
+      config.environment = ...
+      # Add additional settings like so:
       # config.some_key = some_value
     end
+
 
