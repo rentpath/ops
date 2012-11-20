@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe Ops::Heartbeat do
-  it 'accepts new heartbeats' do
-    @heartbeat = Ops::Heartbeat.new
-    @heartbeat.add(:test){ true }
-    @heartbeat.heartbeats.should have(1).items
+  describe '#add' do
+    it 'accepts new heartbeats' do
+      @heartbeat = Ops::Heartbeat.new
+      @heartbeat.add(:test){ true }
+      @heartbeat.heartbeats.should have(1).items
+    end
   end
 
   describe '#check' do
@@ -19,6 +21,12 @@ describe Ops::Heartbeat do
 
     it 'returns false for invalid heartbeats' do
       @heartbeat.check(:invalid_test).should eq(false)
+    end
+  end
+
+  describe '#heartbeats' do
+    it 'returns a hash of heartbeats' do
+      Ops::Heartbeat.new.heartbeats.should be_a Hash
     end
   end
 
