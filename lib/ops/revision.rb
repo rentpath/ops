@@ -20,9 +20,10 @@ module Ops
     def previous_versions
       return @previous_versions if @previous_versions
       @previous_versions = []
-      dirs = Dir.pwd.split('/')
+      path = File.absolute_path(file_root)
+      dirs = file_root.split('/')
       if dirs.last =~ /^\d+$/
-        Dir["../*"].each do |dir|
+        Dir["#{path}/../*"].each do |dir|
           next if dir =~ /#{dirs.last}$/
           version = File.join(dir, 'VERSION')
           revision = File.join(dir, 'REVISION')
