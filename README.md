@@ -18,7 +18,7 @@ Installation
 
 ### For Rails 3 apps:
 
-1. Add the gem to your project's Gemfile:  
+1. Add the gem to your project's Gemfile:
     ```ruby
     gem 'ops'
     ```
@@ -50,7 +50,7 @@ Installation
 
     ```ruby
     require 'ops'
-   
+
     #...
 
     Ops.setup do |config|
@@ -62,6 +62,8 @@ Installation
       "/"    => YourAppClass,
       "/ops" => Ops.new
     ```
+
+
 
 Adding Custom Heartbeats
 ------------------------

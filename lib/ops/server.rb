@@ -39,7 +39,7 @@ module Ops
       if Heartbeat.check name
         "#{name} is OK"
       else
-        status 500
+        status 503
         "#{name} does not have a heartbeat"
       end
     end
