@@ -8,11 +8,9 @@ module Ops
   class Server < Sinatra::Base
     Rabl.register!
     Server.register Sinatra::RespondTo
-    Slim::Engine.set_default_options shortcut: { '#' => 'id', '.' => 'class' }
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
-    set :public_folder, "#{dir}/server/public"
-    set :static, true
+    Slim::Engine.set_default_options shortcut: { '#' => 'id', '.' => 'class' }
 
     helpers Ops::Helpers
 
@@ -34,6 +32,15 @@ module Ops
 
     get '/heartbeat/?' do
       'OK'
+    end
+
+    get '/heartbeat/:name/?' do
+      if Heartbeat.check params[:name]
+        "#{name} is OK"
+      else
+        status 500
+        "#{name} does not have a heartbeat"
+      end
     end
   end
 end

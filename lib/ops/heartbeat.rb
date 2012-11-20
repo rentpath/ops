@@ -1,5 +1,19 @@
 module Ops
   class Heartbeat
+    class << self
+      def add(name, &block)
+        instance.add name, &block
+      end
+
+      def check(name)
+        instance.check(name)
+      end
+
+      def instance
+        @singleton ||= new
+      end
+    end
+
     def heartbeats
       @heartbeats ||= {}
     end
@@ -8,17 +22,20 @@ module Ops
       heartbeats[name] = block
     end
 
-    def check(name = nil)
-      status, text = 200, 'OK'
-      if name
-        begin
-          heartbeats[name.to_sym].call
-          text = "#{name} is OK"
-        rescue
-          status, text = 500, "#{name} does not have a heartbeat"
-        end
+    def check(name)
+      begin
+        return heartbeats[name.to_sym].call
+      rescue Exception => e
+        # print stacktrace for error raised by executing block
+        puts "Exception: #{e}\n#{e.backtrace[2..-1].join("\n")}" unless heartbeats[name.to_sym].nil?
+        return false
       end
-      { status: status, text: text }
+    end
+  end
+
+  class << self
+    def add_heartbeat(name, &block)
+      Heartbeat.add name, &block
     end
   end
 end
