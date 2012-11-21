@@ -27,7 +27,7 @@ module Ops
       "https://github.com/primedia/#{app_name}/#{resource}/#{subresource}" unless subresource =~ /^Unknown/
     end
 
-    def print_detail( object, indent = 0 )
+    def print_detail(object, indent = 0)
       output = ""
       if object.kind_of? Hash
         output << "{\n"

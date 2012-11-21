@@ -15,9 +15,7 @@ module Ops
     helpers Ops::Helpers
 
     def request_headers
-      env.each_with_object({}) do |(k,v), headers|
-        headers[k.to_sym] = v
-      end
+      env.each_with_object({}) { |(k,v), headers| headers[k] = v }
     end
 
     get '/version/?' do
