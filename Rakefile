@@ -12,6 +12,16 @@ end
 require 'rake'
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = "spec/ops/**/*_spec.rb"
+end
+
+desc "Executes the example tests"
+task "test:examples" do
+  %w[rails3 sinatra].each do |ex|
+    puts "\n*** Running tests for #{ex}... ***\n"
+    puts `cd #{File.join(File.dirname(__FILE__),'examples',ex)}; bundle check; bundle exec rake test:ops`
+  end
+end
 
 task :default => :spec

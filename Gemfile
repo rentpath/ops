@@ -4,6 +4,8 @@ gemspec
 
 group :development, :test do
   gem 'rake'
+  gem 'rails'
+  gem 'rails-api'
   gem 'rspec'
 end
 
