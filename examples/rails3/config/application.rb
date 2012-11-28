@@ -23,6 +23,8 @@ module Rails3
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
+    config.active_support.deprecation = :log
+
     Ops.setup do |config|
       config.file_root = File.join(Rails.root,'/../sample_deploys/4123')
       config.environment = Rails.env
