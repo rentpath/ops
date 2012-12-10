@@ -3,10 +3,12 @@ require 'sinatra/respond_to'
 require 'ops/server/helpers'
 require 'rabl'
 require 'slim'
+require 'oj'
 
 module Ops
   class Server < Sinatra::Base
     Rabl.register!
+    Oj.default_options = { time_format: :ruby }
     Server.register Sinatra::RespondTo
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
