@@ -1,6 +1,8 @@
 Ops
 ===
 
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/primedia/ops)
+
 This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.
 
 Typical usage:
