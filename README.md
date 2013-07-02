@@ -1,7 +1,10 @@
 Ops
 ===
 
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/primedia/ops)
+[![Code Climate](https://codeclimate.com/github/primedia/ops.png)](https://codeclimate.com/github/primedia/ops)
+[![Coverage Status](https://coveralls.io/repos/primedia/ops/badge.png)](https://coveralls.io/r/primedia/ops)
+[![Dependency Status](https://gemnasium.com/primedia/ops.png)](https://gemnasium.com/primedia/ops)
+[![Gem Version](https://badge.fury.io/rb/ops.png)](http://badge.fury.io/rb/ops)
 
 This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.
 
