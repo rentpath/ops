@@ -10,7 +10,6 @@ module Ops
     Server.register Sinatra::RespondTo
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
-    Slim::Engine.set_default_options shortcut: { '#' => 'id', '.' => 'class' }
 
     helpers Ops::Helpers
 
