@@ -1,16 +1,13 @@
 require 'sinatra/base'
 require 'sinatra/respond_to'
 require 'ops/server/helpers'
-require 'rabl'
-require 'slim'
+require 'json'
 
 module Ops
   class Server < Sinatra::Base
-    Rabl.register!
     Server.register Sinatra::RespondTo
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
-    Slim::Engine.set_default_options shortcut: { '#' => 'id', '.' => 'class' }
 
     helpers Ops::Helpers
 
@@ -23,8 +20,14 @@ module Ops
       @previous_versions = @version.previous_versions
       @headers = @version.headers
       respond_to do |wants|
-        wants.html { slim :version }
-        wants.json { render :rabl, :version, format: 'json' }
+        wants.html { erb :version }
+        wants.json do
+          JSON.generate({
+            version: @version.version_or_branch,
+            previous_versions: @previous_versions,
+            headers: @headers
+          })
+        end
       end
     end
 
@@ -43,3 +46,4 @@ module Ops
     end
   end
 end
+
