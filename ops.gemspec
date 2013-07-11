@@ -3,8 +3,8 @@ require File.expand_path('../lib/ops/version', __FILE__)
 require 'date'
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Michael Pelz-Sherman", "Colin Rymer", "Primedia Team"]
-  gem.email         = ["mpelzsherman@gmail.com", "colin.rymer@gmail.com"]
+  gem.authors       = ["Michael Pelz-Sherman", "Colin Rymer", "Luke Fender", "Primedia Team"]
+  gem.email         = ["mpelzsherman@gmail.com", "colin.rymer@gmail.com", "lfender6445@gmail.com"]
   gem.description   = 'This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.'
   gem.summary       = "Provide ops info endpoints."
   gem.date          = Date.today.to_s
