@@ -65,7 +65,14 @@ Installation
       "/ops" => Ops.new
     ```
 
-
+    ```ruby
+    # Implementation within rack cascade:
+    run Rack::Cascade.new([
+      NewHomeGuide,
+      ListingSearch::App,
+      Ops.rack_app('/ops')
+    ])
+    ```
 
 Adding Custom Heartbeats
 ------------------------
