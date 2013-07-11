@@ -1,5 +1,7 @@
 module Ops
   module Helpers
+    GITHUB_ORG_LINK = 'https://github.com/primedia'
+
     def hostname
       @hostname ||= `/bin/hostname` || 'Unknown'
     end
@@ -24,7 +26,7 @@ module Ops
     end
 
     def github_link(resource, subresource)
-      "https://github.com/primedia/#{app_name}/#{resource}/#{subresource}" unless subresource =~ /^Unknown/
+      "<a href='#{GITHUB_ORG_LINK}/#{app_name}/#{resource}/#{subresource}'>#{subresource}</a>" unless subresource =~ /^Unknown/
     end
 
     def print_detail(object, indent = 0)

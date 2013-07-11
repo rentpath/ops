@@ -17,9 +17,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Ops::VERSION
   gem.required_ruby_version = '>= 1.9'
-  gem.add_dependency             'oj', '~> 1.4.5'
-  gem.add_dependency             'rabl', '~> 0.7.6'
-  gem.add_dependency             'slim', '~> 2.0.0'
-  gem.add_dependency             'sinatra'
-  gem.add_dependency             'sinatra-respond_to'
+  gem.add_dependency             'sinatra', '>= 1.3.3'
+  gem.add_dependency             'sinatra-respond_to', '>= 0.8.0'
 end
