@@ -64,7 +64,7 @@ Installation
       "/"    => YourAppClass,
       "/ops" => Ops.new
     ```
-If using an app that implements Rack Cascade, you will want to use version .0.0.2 of the gem:
+If using an app that implements Rack Cascade, you will want to use version 0.0.2 of the gem:
 
     run Rack::Cascade.new([
       Ops::Server
