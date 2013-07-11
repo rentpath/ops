@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= app_name %></title>
+    <style type="text/css">
+      td {
+        padding: 0 5px;
+        vertical-align: top;
+      }
+      pre {
+        margin: 0
+      }
+      tr.even {
+        background: #dddddd;
+      }
+      .container {
+        font-size: 20px;
+        width: 1000px;
+        padding-bottom: 100px;
+      }
+      .label {
+        float: left;
+        width: 400px;
+        font-weight: bold;
+      }
+      .spacer {
+        clear: both;
+        padding: 10px;
+      }
+      .value {
+        float: left;
+        width: 500px;
+        text-align: right;
+      }
+      td {
+        padding: 0 5px;
+      }
+      #previous_versions .value {
+        clear: both;
+        width: 1000px;
+        text-align: left;
+      }
+      #previous_versions tr.header td {
+        font-weight: bold;
+      }
+      #previous_versions .value tr.even {
+        background: #dddddd;
+      }
+      #headers .value {
+        clear: both;
+        width: 1000px;
+        text-align: left;
+      }
+      #headers .value tr.even {
+        background: #dddddd;
+      }
+      .clear {
+        clear: both;
+      }
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
