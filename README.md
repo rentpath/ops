@@ -64,14 +64,15 @@ Installation
       "/"    => YourAppClass,
       "/ops" => Ops.new
     ```
-    
-If using an app that implements Rack Cascade, you will want to use version 0.0.2 of the gem:
 
-```ruby
-run Rack::Cascade.new([
-  Ops::Server
-])
-```
+    ```ruby
+    # Implementation within rack cascade:
+    run Rack::Cascade.new([
+      NewHomeGuide,
+      ListingSearch::App,
+      Ops.rack_app('/ops')
+    ])
+    ```
 
 Adding Custom Heartbeats
 ------------------------

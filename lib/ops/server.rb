@@ -17,7 +17,7 @@ module Ops
       env.each_with_object({}) { |(k,v), headers| headers[k] = v }
     end
 
-    get '/ops/version/?' do
+    get '/version/?' do
       @version = Revision.new request_headers
       @previous_versions = @version.previous_versions
       @headers = @version.headers
@@ -27,11 +27,11 @@ module Ops
       end
     end
 
-    get '/ops/heartbeat/?' do
+    get '/heartbeat/?' do
       'OK'
     end
 
-    get '/ops/heartbeat/:name/?' do
+    get '/heartbeat/:name/?' do
       name = params[:name]
       if Heartbeat.check name
         "#{name} is OK"
