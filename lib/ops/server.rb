@@ -10,7 +10,6 @@ module Ops
     Server.register Sinatra::RespondTo
     dir = File.dirname(File.expand_path(__FILE__))
     set :views,  "#{dir}/server/views"
-    Slim::Engine.set_default_options shortcut: { '#' => 'id', '.' => 'class' }
 
     helpers Ops::Helpers
 
@@ -18,7 +17,7 @@ module Ops
       env.each_with_object({}) { |(k,v), headers| headers[k] = v }
     end
 
-    get '/version/?' do
+    get '/ops/version/?' do
       @version = Revision.new request_headers
       @previous_versions = @version.previous_versions
       @headers = @version.headers
@@ -28,11 +27,11 @@ module Ops
       end
     end
 
-    get '/heartbeat/?' do
+    get '/ops/heartbeat/?' do
       'OK'
     end
 
-    get '/heartbeat/:name/?' do
+    get '/ops/heartbeat/:name/?' do
       name = params[:name]
       if Heartbeat.check name
         "#{name} is OK"
