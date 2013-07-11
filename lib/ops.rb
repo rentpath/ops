@@ -9,6 +9,12 @@ module Ops
     def new
       Server.new
     end
+
+    def rack_app(path)
+	    Rack::Builder.new {
+				map(path) { run Ops.new }
+			}.to_app
+    end
   end
 end
 
