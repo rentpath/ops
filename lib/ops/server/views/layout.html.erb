@@ -1,8 +1,8 @@
-doctype html
-html
-  head
-    title= app_name
-    css:
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= app_name %></title>
+    <style type='text/css'>
       td {padding: 0 5px; vertical-align: top;}
       pre {margin: 0}
       tr.even {background: #dddddd;}
@@ -17,6 +17,9 @@ html
       #headers .value {clear: both; width: 1000px; text-align: left;}
       #headers .value tr.even {background: #dddddd;}
       .clear        {clear: both;}
-  body
-    ==yield
-
+    </style>
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>
