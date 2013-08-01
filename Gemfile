@@ -7,6 +7,7 @@ group :development, :test do
   gem 'rails'
   gem 'rails-api'
   gem 'rspec'
+  gem 'rack-test'
 end
 
 group :test do

@@ -20,7 +20,9 @@ module Ops
       @previous_versions = @version.previous_versions
       @headers = @version.headers
       respond_to do |wants|
-        wants.html { erb :version }
+        wants.html do
+          erb :version
+        end
         wants.json do
           JSON.generate({
             version: @version.version_or_branch,
