@@ -4,7 +4,6 @@ PATH
     ops (0.2.1)
       sinatra (>= 1.2.0)
       sinatra-respond_to (>= 0.7.0)
-      tilt (>= 1.2.2)
 
 GEM
   remote: https://rubygems.org/
