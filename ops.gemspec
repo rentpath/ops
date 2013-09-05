@@ -8,7 +8,7 @@ Gem::Specification.new do |gem|
   gem.description   = 'This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.'
   gem.summary       = "Provide ops info endpoints."
   gem.date          = Date.today.to_s
-  gem.homepage      = "http://github.com/primedia/ops"
+  gem.homepage      = "http://primedia.github.io/ops/"
   gem.license       = 'MIT'
   gem.executables   = []
   gem.files         = `git ls-files | grep -v myapp`.split("\n")
