@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Ops by primedia</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Ops</h1>
+        <p>Rack application for versioning and heartbeat info</p>
+
+        <p class="view"><a href="https://github.com/primedia/ops">View the Project on GitHub <small>primedia/ops</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/primedia/ops/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/primedia/ops/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/primedia/ops">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a name="ops" class="anchor" href="#ops"><span class="octicon octicon-link"></span></a>Ops</h1>
+
+<p><a href="https://codeclimate.com/github/primedia/ops"><img src="https://codeclimate.com/github/primedia/ops.png" alt="Code Climate"></a></p>
+
+<p>This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.</p>
+
+<p>Typical usage:</p>
+
+<pre><code>/ops/version      - displays version info as HTML
+/ops/version.json - displays version info as JSON
+/ops/heartbeat    - returns 'OK' if the app is alive
+</code></pre>
+
+<p>This gem replaces the now-deprecated <a href="https://github.com/primedia/ops_routes">ops_routes</a>.</p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a name="for-rails-3-apps" class="anchor" href="#for-rails-3-apps"><span class="octicon octicon-link"></span></a>For Rails 3 apps:</h3>
+
+<ol>
+<li>
+<p>Add the gem to your project's Gemfile:</p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
+</pre></div>
+</li>
+<li>
+<p>Add the following to application.rb:</p>
+
+<div class="highlight"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">file_root</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">root</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span>
+<span class="k">end</span>
+</pre></div>
+</li>
+<li>
+<p>mount the gem in routes.rb:</p>
+
+<div class="highlight"><pre><span class="n">mount</span> <span class="no">Ops</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="ss">:at</span> <span class="o">=&gt;</span> <span class="s2">"/ops"</span>
+</pre></div>
+</li>
+</ol><h3>
+<a name="for-sinatra-apps" class="anchor" href="#for-sinatra-apps"><span class="octicon octicon-link"></span></a>For Sinatra apps:</h3>
+
+<ol>
+<li>
+<p>Add the gem to your project's Gemfile:</p>
+
+<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
+</pre></div>
+</li>
+<li>
+<p>Add the following to config.ru:</p>
+
+<div class="highlight"><pre><span class="nb">require</span> <span class="s1">'ops'</span>
+
+<span class="c1">#...</span>
+
+<span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">file_root</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span> <span class="bp">__FILE__</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'RACK_ENV'</span><span class="o">]</span>
+<span class="k">end</span>
+
+<span class="n">run</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:URLMap</span><span class="o">.</span><span class="n">new</span> <span class="p">\</span>
+  <span class="s2">"/"</span>    <span class="o">=&gt;</span> <span class="no">YourAppClass</span><span class="p">,</span>
+  <span class="s2">"/ops"</span> <span class="o">=&gt;</span> <span class="no">Ops</span><span class="o">.</span><span class="n">new</span>
+</pre></div>
+
+<div class="highlight"><pre><span class="c1"># Implementation within rack cascade:</span>
+<span class="n">run</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:Cascade</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span>
+  <span class="no">NewHomeGuide</span><span class="p">,</span>
+  <span class="ss">ListingSearch</span><span class="p">:</span><span class="ss">:App</span><span class="p">,</span>
+  <span class="no">Ops</span><span class="o">.</span><span class="n">rack_app</span><span class="p">(</span><span class="s1">'/ops'</span><span class="p">)</span>
+<span class="o">]</span><span class="p">)</span>
+</pre></div>
+</li>
+</ol><h2>
+<a name="adding-custom-heartbeats" class="anchor" href="#adding-custom-heartbeats"><span class="octicon octicon-link"></span></a>Adding Custom Heartbeats</h2>
+
+<p>Additionally, you can specify custom heartbeat monitoring pages as follows:</p>
+
+<div class="highlight"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">add_heartbeat</span> <span class="ss">:mysql</span> <span class="k">do</span>
+  <span class="n">conn</span> <span class="o">=</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">connection</span>
+  <span class="n">migrations</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="s2">"SELECT COUNT(1) FROM schema_migrations;"</span><span class="p">)</span> 
+  <span class="n">conn</span><span class="o">.</span><span class="n">disconnect!</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>The mysql example shown above would be accessed at ops/heartbeat/mysql. The heartbeat page will return a <code>200 ‘OK’</code> as long as the provided block returns true. If an error is raised, the heartbeat does not exist, or the block returns a falsey value, a <code>500</code> will be returned instead.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/primedia">primedia</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
