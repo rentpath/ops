@@ -15,6 +15,11 @@ module Ops
       env.each_with_object({}) { |(k,v), headers| headers[k] = v }
     end
 
+    get '/env/?' do
+      @env_vars = ENV.sort
+      erb :env
+    end
+
     get '/version/?' do
       @version = Revision.new request_headers
       @previous_versions = @version.previous_versions

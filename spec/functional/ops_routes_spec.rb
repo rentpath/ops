@@ -44,6 +44,12 @@ end
 describe 'routes', :type => :controller do
   include Rack::Test::Methods
 
+
+  it 'renders a env page' do
+    get "/ops/env"
+    last_response.should be_ok
+  end
+
   it 'renders a version page' do
     get "/ops/version"
     last_response.should be_ok
