@@ -31,6 +31,7 @@ module Ops
         wants.json do
           JSON.generate({
             version: @version.version_or_branch,
+            revision: @version.last_commit,
             previous_versions: @previous_versions,
             headers: @headers
           })
