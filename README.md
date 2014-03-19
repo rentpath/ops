@@ -3,7 +3,9 @@ Ops
 
 [![Code Climate](https://codeclimate.com/github/primedia/ops.png)](https://codeclimate.com/github/primedia/ops)
 
-This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.
+This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.
+
+**You will likely want to block or restrict access to the `/ops/env` route since this exposes all of your currently set environment variables (e.g. any API keys set as env vars) to the public.**
 
 Typical usage:
 
@@ -11,6 +13,7 @@ Typical usage:
 /ops/version      - displays version info as HTML
 /ops/version.json - displays version info as JSON
 /ops/heartbeat    - returns 'OK' if the app is alive
+/ops/env          - display the currently set environment variables
 ```
 
 This gem replaces the now-deprecated [ops_routes](https://github.com/primedia/ops_routes).
