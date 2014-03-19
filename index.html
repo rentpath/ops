@@ -33,13 +33,16 @@
 
 <p><a href="https://codeclimate.com/github/primedia/ops"><img src="https://codeclimate.com/github/primedia/ops.png" alt="Code Climate"></a></p>
 
-<p>This gem provides standardized support for obtaining version and heartbeat information from Sinatra or Rails-based web applications.</p>
+<p>This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.</p>
+
+<p><strong>You will likely want to block or restrict access to the <code>/ops/env</code> route since this exposes all of your currently set environment variables (e.g. any API keys set as env vars) to the public.</strong></p>
 
 <p>Typical usage:</p>
 
 <pre><code>/ops/version      - displays version info as HTML
 /ops/version.json - displays version info as JSON
 /ops/heartbeat    - returns 'OK' if the app is alive
+/ops/env          - display the currently set environment variables
 </code></pre>
 
 <p>This gem replaces the now-deprecated <a href="https://github.com/primedia/ops_routes">ops_routes</a>.</p>
@@ -54,13 +57,13 @@
 <li>
 <p>Add the gem to your project's Gemfile:</p>
 
-<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
 </pre></div>
 </li>
 <li>
 <p>Add the following to application.rb:</p>
 
-<div class="highlight"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+<div class="highlight highlight-ruby"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">file_root</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">root</span>
   <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span>
 <span class="k">end</span>
@@ -69,7 +72,7 @@
 <li>
 <p>mount the gem in routes.rb:</p>
 
-<div class="highlight"><pre><span class="n">mount</span> <span class="no">Ops</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="ss">:at</span> <span class="o">=&gt;</span> <span class="s2">"/ops"</span>
+<div class="highlight highlight-ruby"><pre><span class="n">mount</span> <span class="no">Ops</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="ss">:at</span> <span class="o">=&gt;</span> <span class="s2">"/ops"</span>
 </pre></div>
 </li>
 </ol><h3>
@@ -79,13 +82,13 @@
 <li>
 <p>Add the gem to your project's Gemfile:</p>
 
-<div class="highlight"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
+<div class="highlight highlight-ruby"><pre><span class="n">gem</span> <span class="s1">'ops'</span>
 </pre></div>
 </li>
 <li>
 <p>Add the following to config.ru:</p>
 
-<div class="highlight"><pre><span class="nb">require</span> <span class="s1">'ops'</span>
+<div class="highlight highlight-ruby"><pre><span class="nb">require</span> <span class="s1">'ops'</span>
 
 <span class="c1">#...</span>
 
@@ -94,15 +97,15 @@
   <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'RACK_ENV'</span><span class="o">]</span>
 <span class="k">end</span>
 
-<span class="n">run</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:URLMap</span><span class="o">.</span><span class="n">new</span> <span class="p">\</span>
+<span class="n">run</span> <span class="no">Rack</span><span class="o">::</span><span class="no">URLMap</span><span class="o">.</span><span class="n">new</span> <span class="p">\</span>
   <span class="s2">"/"</span>    <span class="o">=&gt;</span> <span class="no">YourAppClass</span><span class="p">,</span>
   <span class="s2">"/ops"</span> <span class="o">=&gt;</span> <span class="no">Ops</span><span class="o">.</span><span class="n">new</span>
 </pre></div>
 
-<div class="highlight"><pre><span class="c1"># Implementation within rack cascade:</span>
-<span class="n">run</span> <span class="ss">Rack</span><span class="p">:</span><span class="ss">:Cascade</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span>
+<div class="highlight highlight-ruby"><pre><span class="c1"># Implementation within rack cascade:</span>
+<span class="n">run</span> <span class="no">Rack</span><span class="o">::</span><span class="no">Cascade</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="o">[</span>
   <span class="no">NewHomeGuide</span><span class="p">,</span>
-  <span class="ss">ListingSearch</span><span class="p">:</span><span class="ss">:App</span><span class="p">,</span>
+  <span class="no">ListingSearch</span><span class="o">::</span><span class="no">App</span><span class="p">,</span>
   <span class="no">Ops</span><span class="o">.</span><span class="n">rack_app</span><span class="p">(</span><span class="s1">'/ops'</span><span class="p">)</span>
 <span class="o">]</span><span class="p">)</span>
 </pre></div>
@@ -112,8 +115,8 @@
 
 <p>Additionally, you can specify custom heartbeat monitoring pages as follows:</p>
 
-<div class="highlight"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">add_heartbeat</span> <span class="ss">:mysql</span> <span class="k">do</span>
-  <span class="n">conn</span> <span class="o">=</span> <span class="ss">ActiveRecord</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">connection</span>
+<div class="highlight highlight-ruby"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">add_heartbeat</span> <span class="ss">:mysql</span> <span class="k">do</span>
+  <span class="n">conn</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span>
   <span class="n">migrations</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="s2">"SELECT COUNT(1) FROM schema_migrations;"</span><span class="p">)</span> 
   <span class="n">conn</span><span class="o">.</span><span class="n">disconnect!</span>
 <span class="k">end</span>
