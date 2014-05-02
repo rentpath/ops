@@ -1,5 +1,7 @@
 module Ops
   class Revision
+    attr_writer :branch_source
+
     def initialize(new_headers={}, opts = Ops.config)
       @file_root = opts.file_root.to_s # convert to string in case they pass us a Pathname
       @environment = opts.environment
@@ -9,7 +11,7 @@ module Ops
     def version_or_branch
       @version ||= if version_file?
                      chomp(version_file).gsub('^{}', '')
-                   elsif development? && `git branch` =~ /^\* (.*)$/
+                   elsif development? && branch_source.call =~ /^\* (.*)$/
                      $1
                    else
                      'Unknown (VERSION file is missing)'
@@ -112,6 +114,12 @@ module Ops
 
     def headers
       @headers.select{|k,v| k.match(/^[-A-Z_].*$/) }
+    end
+
+    private
+
+    def branch_source
+      @branch_source ||= ->{ `git branch` }
     end
   end
 end
