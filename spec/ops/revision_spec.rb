@@ -26,7 +26,8 @@ describe Ops::Revision do
   it "development env should have branch" do
     dev_settings = double("settings", {:file_root => @root, :environment => 'development'})
     dev_version = Ops::Revision.new({}, dev_settings)
-    dev_version.version_or_branch.should eq("master")
+    dev_version.branch_source = ->{ "* dev\nsome-topic-branch\nother-topic-branch" }
+    dev_version.version_or_branch.should eq('dev')
   end
 
   it "should have request headers" do
