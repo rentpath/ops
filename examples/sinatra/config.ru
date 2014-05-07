@@ -10,6 +10,9 @@ use Rack::ShowExceptions
 Ops.setup do |config|
   config.file_root = '../sample_deploys/4123'
   config.environment = ENV['RACK_ENV']
+  config.dependencies = {
+    dependency: proc { true }
+  }
 end
 
 run Rack::URLMap.new \

@@ -28,6 +28,9 @@ module Rails3
     Ops.setup do |config|
       config.file_root = File.join(Rails.root,'/../sample_deploys/4123')
       config.environment = Rails.env
+      config.dependencies = {
+        dependency: proc { true }
+      }
     end
 
   end
