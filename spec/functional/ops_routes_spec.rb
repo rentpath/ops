@@ -57,7 +57,7 @@ describe 'routes', :type => :controller do
   it 'renders a json version page' do
     get "/ops/version.json"
     expect(last_response).to be_ok
-    last_response.should have_content_type('application/json').with_charset('utf-8')
+    expect(last_response).to have_content_type('application/json').with_charset('utf-8')
   end
 
   it 'renders a heartbeat page' do
