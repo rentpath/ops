@@ -55,11 +55,9 @@ module Ops
 
     get '/health_check/?' do
       healthy, details = HealthCheck.check!
-      [
-        healthy ? 200 : 500,
-        {"Content-Type" => "application/json"},
-        details.to_json
-      ]
+      status (healthy ? 200 : 500)
+      content_type :json
+      details.to_json
     end
   end
 end
