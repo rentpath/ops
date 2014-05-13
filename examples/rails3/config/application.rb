@@ -28,6 +28,10 @@ module Rails3
     Ops.setup do |config|
       config.file_root = File.join(Rails.root,'/../sample_deploys/4123')
       config.environment = Rails.env
+
+      # Optionally use a configuration service
+      # config.use_config_service = true
+      # config.config_service_adapter = Some::Class
     end
 
   end

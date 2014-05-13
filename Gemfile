@@ -8,6 +8,7 @@ group :development, :test do
   gem 'rails-api'
   gem 'rspec'
   gem 'rack-test'
+  gem 'pry'
 end
 
 group :test do

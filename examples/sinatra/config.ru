@@ -10,6 +10,10 @@ use Rack::ShowExceptions
 Ops.setup do |config|
   config.file_root = '../sample_deploys/4123'
   config.environment = ENV['RACK_ENV']
+
+  # Optionally use a configuration service
+  # config.use_config_service = true
+  # config.config_service_adapter = Some::Class
 end
 
 run Rack::URLMap.new \
