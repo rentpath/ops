@@ -52,6 +52,19 @@ module Ops
         "#{name} does not have a heartbeat"
       end
     end
+
+    get '/config/?' do
+      if config_adapter = Ops.config.config_service_adapter
+        begin
+          body config_adapter.call(params).to_json
+        rescue StandardError => e
+          status 422
+          body({ 'error' => e.message }.to_json)
+        end
+      else
+        status 501
+      end
+    end
   end
 end
 
