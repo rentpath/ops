@@ -30,8 +30,7 @@ module Rails3
       config.environment = Rails.env
 
       # Optionally use a configuration service
-      # config.use_config_service = true
-      # config.config_service_adapter = Some::Class
+      # config.config_service_adapter = something_that_responds_to_call
     end
 
   end

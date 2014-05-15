@@ -54,10 +54,9 @@ module Ops
     end
 
     get '/config/?' do
-      if Ops.config.use_config_service
+      if config_adapter = Ops.config.config_service_adapter
         begin
-          config_adapter = Ops.config.config_service_adapter.new
-          body config_adapter.get_config(params).to_json
+          body config_adapter.call(params).to_json
         rescue StandardError => e
           status 422
           body({ 'error' => e.message }.to_json)

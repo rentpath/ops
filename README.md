@@ -40,8 +40,7 @@ Installation
     Ops.setup do |config|
       config.file_root = Rails.root
       config.environment = Rails.env
-      config.use_config_service = true # optional
-      config.config_service_adapter = Some::Class # optional
+      config.config_service_adapter = something_that_responds_to_call # optional
     end
     ```
 
@@ -69,8 +68,7 @@ Installation
     Ops.setup do |config|
       config.file_root = File.dirname __FILE__
       config.environment = ENV['RACK_ENV']
-      config.use_config_service = true # optional
-      config.config_service_adapter = Some::Class # optional
+      config.config_service_adapter = something_that_responds_to_call # optional
     end
 
     run Rack::URLMap.new \
@@ -105,25 +103,24 @@ The mysql example shown above would be accessed at ops/heartbeat/mysql. The hear
 
 ## The Configuration Service Adapter (Optional)
 
-If you wish to use the optional configuration service, you must provide a class
-that conforms to the expected API:
-
-* an `initialize` method that takes 0 arguments
-* a `get_config` method that takes 1 argument, a `Hash`, and returns a `Hash`
+If you wish to use the optional configuration service, you must provide
+something that responds to `#call` with an optional `Hash` argument.
 
 For example:
 
 ```ruby
 class MyConfigurationService
-  def initialize
-  end
-
-  def get_config(options)
+  def call(options = {})
     { key: 'value' }
   end
 end
 ```
 
-To use your configuration service, enable it and provide your class as in the
-installation instructions above.
+or
+
+```ruby
+Proc.new { |_| { key: 'value' } }
+```
+
+Then just provide your "callable" per the installation instructions above.
 

@@ -3,13 +3,13 @@ require 'rack/test'
 require 'ops/server'
 
 class ReliableConfigService
-  def get_config(options)
+  def call(options = {})
     { foo: 'bar' }
   end
 end
 
 class ErrorProneConfigService
-  def get_config(options)
+  def call(options = {})
     raise StandardError, 'oops'
   end
 end
@@ -21,16 +21,14 @@ describe Ops::Server do
     Ops::Server
   end
 
-  def enable_config_service(adapter_class_name)
+  def enable_config_service(adapter)
     Ops.setup do |config|
-      config.use_config_service = true
-      config.config_service_adapter = adapter_class_name
+      config.config_service_adapter = adapter
     end
   end
 
   def disable_config_service
     Ops.setup do |config|
-      config.use_config_service = false
       config.config_service_adapter = nil
     end
   end
@@ -38,7 +36,7 @@ describe Ops::Server do
   describe 'GET /config' do
     describe 'when config service is enabled' do
       it 'responds with response from config service' do
-        enable_config_service(ReliableConfigService)
+        enable_config_service(ReliableConfigService.new)
         get '/config'
         last_response.status.should == 200
         body = JSON.parse(last_response.body)
@@ -46,7 +44,7 @@ describe Ops::Server do
       end
 
       it 'responds with an error from config service' do
-        enable_config_service(ErrorProneConfigService)
+        enable_config_service(ErrorProneConfigService.new)
         get '/config'
         last_response.status.should == 422
         body = JSON.parse(last_response.body)
