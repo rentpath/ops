@@ -35,14 +35,30 @@
 
 <p>This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.</p>
 
-<p><strong>You will likely want to block or restrict access to the <code>/ops/env</code> route since this exposes all of your currently set environment variables (e.g. any API keys set as env vars) to the public.</strong></p>
+<p><strong>You will likely want to block or restrict access to the following routes:</strong></p>
 
-<p>Typical usage:</p>
+<table>
+<thead><tr>
+<th>Route</th>
+<th>Notes</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><code>/ops/env</code></td>
+<td>Exposes all of your environment variables (e.g. any API keys set as environment variables) to the public</td>
+</tr>
+<tr>
+<td><code>/ops/config</code></td>
+<td>Exposes all of your configuration keys and values to the public (if you're using a configuration service).</td>
+</tr>
+</tbody>
+</table><p>Typical usage:</p>
 
 <pre><code>/ops/version      - displays version info as HTML
 /ops/version.json - displays version info as JSON
 /ops/heartbeat    - returns 'OK' if the app is alive
 /ops/env          - display the currently set environment variables
+/ops/config       - display all configuration values as JSON (optional)
 </code></pre>
 
 <p>This gem replaces the now-deprecated <a href="https://github.com/primedia/ops_routes">ops_routes</a>.</p>
@@ -66,6 +82,7 @@
 <div class="highlight highlight-ruby"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">file_root</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">root</span>
   <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">config_service_adapter</span> <span class="o">=</span> <span class="n">something_that_responds_to_call</span> <span class="c1"># optional</span>
 <span class="k">end</span>
 </pre></div>
 </li>
@@ -95,6 +112,7 @@
 <span class="no">Ops</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">file_root</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">dirname</span> <span class="bp">__FILE__</span>
   <span class="n">config</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">'RACK_ENV'</span><span class="o">]</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">config_service_adapter</span> <span class="o">=</span> <span class="n">something_that_responds_to_call</span> <span class="c1"># optional</span>
 <span class="k">end</span>
 
 <span class="n">run</span> <span class="no">Rack</span><span class="o">::</span><span class="no">URLMap</span><span class="o">.</span><span class="n">new</span> <span class="p">\</span>
@@ -117,12 +135,34 @@
 
 <div class="highlight highlight-ruby"><pre><span class="no">Ops</span><span class="o">.</span><span class="n">add_heartbeat</span> <span class="ss">:mysql</span> <span class="k">do</span>
   <span class="n">conn</span> <span class="o">=</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span><span class="o">.</span><span class="n">connection</span>
-  <span class="n">migrations</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="s2">"SELECT COUNT(1) FROM schema_migrations;"</span><span class="p">)</span> 
+  <span class="n">migrations</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">select_all</span><span class="p">(</span><span class="s2">"SELECT COUNT(1) FROM schema_migrations;"</span><span class="p">)</span>
   <span class="n">conn</span><span class="o">.</span><span class="n">disconnect!</span>
 <span class="k">end</span>
 </pre></div>
 
 <p>The mysql example shown above would be accessed at ops/heartbeat/mysql. The heartbeat page will return a <code>200 ‘OK’</code> as long as the provided block returns true. If an error is raised, the heartbeat does not exist, or the block returns a falsey value, a <code>500</code> will be returned instead.</p>
+
+<h2>
+<a name="the-configuration-service-adapter-optional" class="anchor" href="#the-configuration-service-adapter-optional"><span class="octicon octicon-link"></span></a>The Configuration Service Adapter (Optional)</h2>
+
+<p>If you wish to use the optional configuration service, you must provide
+something that responds to <code>#call</code> with an optional <code>Hash</code> argument.</p>
+
+<p>For example:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="k">class</span> <span class="nc">MyConfigurationService</span>
+  <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+    <span class="p">{</span> <span class="ss">key</span><span class="p">:</span> <span class="s1">'value'</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+<p>or</p>
+
+<div class="highlight highlight-ruby"><pre><span class="no">Proc</span><span class="o">.</span><span class="n">new</span> <span class="p">{</span> <span class="o">|</span><span class="n">_</span><span class="o">|</span> <span class="p">{</span> <span class="ss">key</span><span class="p">:</span> <span class="s1">'value'</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+
+<p>Then just provide your "callable" per the installation instructions above.</p>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/primedia">primedia</a></p>
