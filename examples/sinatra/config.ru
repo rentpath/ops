@@ -10,6 +10,9 @@ use Rack::ShowExceptions
 Ops.setup do |config|
   config.file_root = '../sample_deploys/4123'
   config.environment = ENV['RACK_ENV']
+  config.dependencies = {
+    dependency: proc { true }
+  }
 
   # Optionally use a configuration service
   # config.config_service_adapter = something_that_responds_to_call

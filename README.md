@@ -19,6 +19,7 @@ Typical usage:
 /ops/version.json - displays version info as JSON
 /ops/heartbeat    - returns 'OK' if the app is alive
 /ops/env          - display the currently set environment variables
+/ops/health_check - displays the status for the provided app dependencies
 /ops/config       - display all configuration values as JSON (optional)
 ```
 
@@ -40,6 +41,9 @@ Installation
     Ops.setup do |config|
       config.file_root = Rails.root
       config.environment = Rails.env
+      config.dependencies = {
+        dependency_name: proc { dependency_check }
+      }
       config.config_service_adapter = something_that_responds_to_call # optional
     end
     ```
@@ -68,6 +72,9 @@ Installation
     Ops.setup do |config|
       config.file_root = File.dirname __FILE__
       config.environment = ENV['RACK_ENV']
+      config.dependencies = {
+        dependency_name: proc { dependency_check }
+      }
       config.config_service_adapter = something_that_responds_to_call # optional
     end
 

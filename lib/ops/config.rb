@@ -1,5 +1,7 @@
 module Ops
   class Config
+    attr_reader :data
+
     def initialize(data={})
       @data = {}
       update!(data)

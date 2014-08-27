@@ -28,10 +28,12 @@ module Rails3
     Ops.setup do |config|
       config.file_root = File.join(Rails.root,'/../sample_deploys/4123')
       config.environment = Rails.env
+      config.dependencies = {
+        dependency: proc { true }
+      }
 
       # Optionally use a configuration service
       # config.config_service_adapter = something_that_responds_to_call
     end
-
   end
 end

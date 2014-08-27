@@ -44,26 +44,30 @@ end
 describe 'routes', :type => :controller do
   include Rack::Test::Methods
 
-
   it 'renders a env page' do
     get "/ops/env"
-    last_response.should be_ok
+    expect(last_response).to be_ok
   end
 
   it 'renders a version page' do
     get "/ops/version"
-    last_response.should be_ok
+    expect(last_response).to be_ok
   end
 
   it 'renders a json version page' do
     get "/ops/version.json"
-    last_response.should be_ok
-    last_response.should have_content_type('application/json').with_charset('utf-8')
+    expect(last_response).to be_ok
+    expect(last_response).to have_content_type('application/json').with_charset('utf-8')
   end
 
   it 'renders a heartbeat page' do
     get "/ops/heartbeat"
-    last_response.should be_ok
+    expect(last_response).to be_ok
+  end
+
+  it 'renders a health_check page' do
+    get "/ops/health_check"
+    expect(last_response).to be_ok
   end
 
 end

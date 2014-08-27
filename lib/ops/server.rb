@@ -54,6 +54,13 @@ module Ops
       end
     end
 
+    get '/health_check/?' do
+      healthy, details = HealthCheck.check!
+      status (healthy ? 200 : 500)
+      content_type :json
+      details.to_json
+    end
+
     get '/config/?' do
       if config_adapter = Ops.config.config_service_adapter
         begin
