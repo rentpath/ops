@@ -31,7 +31,9 @@ module Rails3
       config.dependencies = {
         dependency: proc { true }
       }
-    end
 
+      # Optionally use a configuration service
+      # config.config_service_adapter = something_that_responds_to_call
+    end
   end
 end

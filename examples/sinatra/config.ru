@@ -13,6 +13,9 @@ Ops.setup do |config|
   config.dependencies = {
     dependency: proc { true }
   }
+
+  # Optionally use a configuration service
+  # config.config_service_adapter = something_that_responds_to_call
 end
 
 run Rack::URLMap.new \
