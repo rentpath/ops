@@ -22,7 +22,7 @@ Typical usage:
 /ops/config       - display all configuration values as JSON (optional)
 ```
 
-This gem replaces the now-deprecated [ops_routes](https://github.com/primedia/ops_routes).
+This gem replaces the now-deprecated [ops_routes](https://github.com/rentpath/ops_routes).
 
 Installation
 ------------

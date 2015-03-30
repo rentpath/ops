@@ -1,6 +1,6 @@
 module Ops
   module Helpers
-    GITHUB_ORG_LINK = 'https://github.com/primedia'
+    GITHUB_ORG_LINK = 'https://github.com/rentpath'
 
     def hostname
       @hostname ||= `/bin/hostname` || 'Unknown'
