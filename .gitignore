@@ -5,6 +5,9 @@ coverage.data
 # rdoc generated
 rdoc
 
+*.sublime-project
+*.sublime-workspace
+
 # bundler
 .bundle
 

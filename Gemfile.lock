@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ops (0.5.1)
+    ops (0.5.2)
       sinatra (>= 1.2.0)
       sinatra-respond_to (>= 0.7.0)
 
