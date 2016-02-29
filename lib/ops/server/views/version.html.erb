@@ -1,26 +1,5 @@
 <div class="container">
   <div class="spacer"></div>
-  <div id="version">
-    <div class="label">
-      <%= "#{app_name} Version" %>
-    </div>
-    <div class="value">
-      <%= version_link @version.version_or_branch %>
-    </div>
-  </div>
-  <div class="spacer"></div>
-  <div id="date">
-    <div class="label">Date Deployed</div>
-    <div class="value"><%= @version.deploy_date %></div>
-  </div>
-  <div class="spacer"></div>
-  <div id="commit">
-    <div class="label">Last Commit</div>
-    <div class="value">
-      <%= commit_link(@version.last_commit)%>
-    </div>
-  </div>
-  <div class="spacer"></div>
   <div id="host">
     <div class="label">Host</div>
     <div class="value"><%= hostname %></div>
@@ -31,33 +10,31 @@
     <div class="value"><%= @version.environment %></div>
   </div>
   <div class="spacer"></div>
-  <div id="previous_versions">
-    <div class="label">Previous Versions</div>
-    <div class="value">
-      <% unless @previous_versions.empty? %>
-        <table>
-          <tr class="header">
-            <td>Time</td>
-            <td>Version</td>
-            <td>Commit</td>
-          </tr>
-          <% @previous_versions.each_with_index do |version, i| %>
-            <tr class="<%= i%2==0 ? 'even' : nil %>">
-              <td>
-                <%= version[:time].strftime('%x %X') %>
-              </td>
-              <td>
-                <%= version_link(version[:version]) %>
-              </td>
-              <td>
-                <%= commit_link(version[:revision]) %>
-              </td>
-            </tr>
-          <% end %>
-        </table>
-      <% end %>
+  <h3>Current Deploy Info</h3>
+  <% @version.info.each do |key, value| %>
+    <div class="spacer"></div>
+    <div>
+      <div class="label">
+        <%= key.to_s.gsub('_',' ').capitalize %>
+      </div>
+      <div class="value">
+        <%= value %>
+      </div>
     </div>
-  </div>
+  <% end %>
+  <div class="spacer"></div>
+  <h3>Previous Deploy Info</h3>
+  <% @version.previous_info.each do |key, value| %>
+    <div class="spacer"></div>
+    <div>
+      <div class="label">
+        <%= key.to_s.gsub('_',' ').capitalize %>
+      </div>
+      <div class="value">
+        <%= value %>
+      </div>
+    </div>
+  <% end %>
   <div class="spacer"></div>
   <div id="headers">
     <div class="label">Headers</div>

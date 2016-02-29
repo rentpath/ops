@@ -13,5 +13,6 @@ rdoc
 
 .DS_Store
 .tags
+tags
 
 *.gem

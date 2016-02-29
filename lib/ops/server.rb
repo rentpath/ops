@@ -14,14 +14,9 @@ module Ops
     def request_headers
       env.each_with_object({}) { |(k,v), headers| headers[k] = v }
     end
-    
-    def jsonified_version(version, previous_versions, headers)
-      JSON.generate({
-        version: version.version_or_branch,
-        revision: version.last_commit,
-        previous_versions: previous_versions,
-        headers: headers
-      })
+
+    def jsonified_version(version, headers)
+      JSON.generate({info: @version.info, previous_info: @version.previous_info, headers: @headers})
     end
 
     get '/env/?' do
@@ -31,12 +26,11 @@ module Ops
 
     get '/version/?' do
       @version = Revision.new(request_headers)
-      @previous_versions = @version.previous_versions
       @headers = @version.headers
-      
+
       respond_to do |wants|
         wants.html { erb :version }
-        wants.json { jsonified_version(@version, @previous_versions, @headers) }
+        wants.json { jsonified_version(@version, @headers) }
       end
     end
 
