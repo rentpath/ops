@@ -40,6 +40,7 @@ Installation
     Ops.setup do |config|
       config.file_root = Rails.root
       config.environment = Rails.env
+      config.repo_name = 'my_repository_name'
       config.config_service_adapter = something_that_responds_to_call # optional
     end
     ```

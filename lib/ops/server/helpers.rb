@@ -25,8 +25,12 @@ module Ops
       github_link 'commit', commit
     end
 
+    def repo_name
+      Ops.config[:repo_name] || app_name
+    end
+
     def github_link(resource, subresource)
-      "<a href='#{GITHUB_ORG_LINK}/#{app_name}/#{resource}/#{subresource}'>#{subresource}</a>" unless subresource =~ /^Unknown/
+      "<a href='#{GITHUB_ORG_LINK}/#{repo_name}/#{resource}/#{subresource}'>#{subresource}</a>" unless subresource =~ /^Unknown/
     end
 
     def print_detail(object, indent = 0)
