@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gemspec
 
@@ -7,6 +7,8 @@ group :development, :test do
   gem 'rails'
   gem 'rails-api'
   gem 'rspec'
+  gem 'rack-test'
+  gem 'pry'
 end
 
 group :test do

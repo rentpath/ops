@@ -1,14 +1,12 @@
-# rcov generated
-coverage
-coverage.data
-
-# rdoc generated
-rdoc
-
-# bundler
+*.gem
+*.sublime-project
+*.sublime-workspace
 .bundle
-
 .DS_Store
 .tags
-
-*.gem
+coverage
+coverage.data
+pkg
+rdoc
+tags
+vendor

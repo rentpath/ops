@@ -1,5 +1,7 @@
 module Ops
   module Helpers
+    GITHUB_ORG_LINK = 'https://github.com/rentpath'
+
     def hostname
       @hostname ||= `/bin/hostname` || 'Unknown'
     end
@@ -23,8 +25,12 @@ module Ops
       github_link 'commit', commit
     end
 
+    def repo_name
+      Ops.config[:repo_name] || app_name
+    end
+
     def github_link(resource, subresource)
-      "https://github.com/primedia/#{app_name}/#{resource}/#{subresource}" unless subresource =~ /^Unknown/
+      "<a href='#{GITHUB_ORG_LINK}/#{repo_name}/#{resource}/#{subresource}'>#{subresource}</a>" unless subresource =~ /^Unknown/
     end
 
     def print_detail(object, indent = 0)
