@@ -38,17 +38,17 @@ describe Ops::Server do
       it 'responds with response from config service' do
         enable_config_service(ReliableConfigService.new)
         get '/config'
-        last_response.status.should == 200
+        expect(last_response.status).to eq(200)
         body = JSON.parse(last_response.body)
-        body.should == { 'foo' => 'bar' }
+        expect(body).to eq('foo' => 'bar')
       end
 
       it 'responds with an error from config service' do
         enable_config_service(ErrorProneConfigService.new)
         get '/config'
-        last_response.status.should == 422
+        expect(last_response.status).to eq(422)
         body = JSON.parse(last_response.body)
-        body.should == { 'error' => 'oops' }
+        expect(body).to eq('error' => 'oops')
       end
     end
 
@@ -59,7 +59,7 @@ describe Ops::Server do
 
       it 'responds with an error' do
         get '/config'
-        last_response.status.should == 501
+        expect(last_response.status).to eq(501)
       end
     end
   end

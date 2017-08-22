@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# script/bootstrap: Resolve all dependencies that the application requires to run.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+if [ -f ".ruby-version" ]; then
+  which bundle >/dev/null 2>&1  || {
+    echo "===> Installing Bundler Gem…"
+    gem install bundler
+  }
+fi
+
+if [ -f "Gemfile" ]; then
+  echo "===> Installing gem dependencies…"
+  bundle check --path vendor/bundle >/dev/null 2>&1  || {
+    bundle install --path vendor/bundle
+  }
+fi

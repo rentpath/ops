@@ -1,0 +1,7 @@
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'examples/**/vendor/**/*'
+
+inherit_from:
+  - https://raw.githubusercontent.com/rentpath/style-guides/master/ruby/.rubocop.yml

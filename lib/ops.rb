@@ -11,10 +11,9 @@ module Ops
     end
 
     def rack_app(path)
-      Rack::Builder.new {
+      Rack::Builder.new do
         map(path) { run Ops.new }
-      }.to_app
+      end.to_app
     end
   end
 end
-

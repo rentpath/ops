@@ -23,13 +23,10 @@ module Ops
     end
 
     def check(name)
-      begin
-        return heartbeats[name.to_sym].call
-      rescue Exception => e
-        # print stacktrace for error raised by executing block
-        puts "Exception: #{e}\n#{e.backtrace[2..-1].join("\n")}" unless heartbeats[name.to_sym].nil?
-        return false
-      end
+      return heartbeats[name.to_sym].call
+    rescue StandardError => e
+      puts "Error: #{e}\n#{e.backtrace[2..-1].join("\n")}" unless heartbeats[name.to_sym].nil?
+      return false
     end
   end
 
