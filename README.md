@@ -1,9 +1,22 @@
-Ops
-===
+# Ops
+This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.
 
 [![Code Climate](https://codeclimate.com/github/primedia/ops.png)](https://codeclimate.com/github/primedia/ops)
+[![Build Status](https://travis-ci.org/rentpath/ops.svg?branch=master)](https://travis-ci.org/rentpath/ops)
 
-This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Installation](#installation)
+  - [For Rails apps:](#for-rails-apps)
+  - [For Sinatra apps:](#for-sinatra-apps)
+- [Adding Custom Heartbeats](#adding-custom-heartbeats)
+- [The Configuration Service Adapter (Optional)](#the-configuration-service-adapter-optional)
+  - [Running tests](#running-tests)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 
 **You will likely want to block or restrict access to the following routes:**
 
@@ -27,7 +40,7 @@ This gem replaces the now-deprecated [ops_routes](https://github.com/rentpath/op
 Installation
 ------------
 
-### For Rails 3 apps:
+### For Rails apps:
 
 1. Add the gem to your project's Gemfile:
     ```ruby
@@ -80,8 +93,8 @@ Installation
     ```ruby
     # Implementation within rack cascade:
     run Rack::Cascade.new([
-      NewHomeGuide,
-      ListingSearch::App,
+      MyApp,
+      MySearch::App,
       Ops.rack_app('/ops')
     ])
     ```
@@ -99,7 +112,10 @@ Ops.add_heartbeat :mysql do
 end
 ```
 
-The mysql example shown above would be accessed at ops/heartbeat/mysql. The heartbeat page will return a `200 ‘OK’` as long as the provided block returns true. If an error is raised, the heartbeat does not exist, or the block returns a falsey value, a `500` will be returned instead.
+The mysql example shown above would be accessed at ops/heartbeat/mysql.
+The heartbeat page will return a `200 ‘OK’` as long as the provided block returns true.
+If an error is raised, the heartbeat does not exist, or the block returns a falsey value,
+a `500` will be returned instead.
 
 
 ## The Configuration Service Adapter (Optional)
@@ -125,3 +141,6 @@ Proc.new { |_| { key: 'value' } }
 
 Then just provide your "callable" per the installation instructions above.
 
+### Running tests
+
+    script/test

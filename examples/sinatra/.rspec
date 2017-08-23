@@ -1,3 +1,2 @@
 --color
--fn
---tty
+--require spec_helper

@@ -1,17 +1,14 @@
 ENV['RAILS_ENV'] = ENV['RACK_ENV'] ||= 'test'
 
-require 'simplecov'
-SimpleCov.start
+ENV['RAILS_ENV'] ||= 'test'
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'rspec'
-require 'ops'
-require 'rack/test'
-require 'pry'
+require File.expand_path('../../config/environment', __FILE__)
 
 RSpec.configure do |config|
-  config.include Rack::Test::Methods
+  config.include Rack::Test::Methods, type: :controller
+
+  config.color = true
+  config.tty = true
 
   config.order = :random
   Kernel.srand config.seed
@@ -29,5 +26,5 @@ RSpec.configure do |config|
 end
 
 def app
-  @app ||= Rack::Builder.parse_file(File.expand_path('../support/config.ru', __FILE__)).first
+  @app ||= RailsAppSample::Application
 end

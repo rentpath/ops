@@ -2,7 +2,7 @@ module Ops
   class Revision
     attr_writer :branch_source
 
-    def initialize(new_headers={}, opts = Ops.config)
+    def initialize(new_headers = {}, opts = Ops.config)
       @file_root = opts.file_root.to_s # convert to string in case they pass us a Pathname
       @environment = opts.environment
       @headers = new_headers
@@ -12,7 +12,7 @@ module Ops
       @version ||= if version_file?
                      chomp(version_file).gsub('^{}', '')
                    elsif development? && branch_source.call =~ /^\* (.*)$/
-                     $1
+                     Regexp.last_match(1)
                    else
                      'Unknown (VERSION file is missing)'
                    end
@@ -23,14 +23,14 @@ module Ops
     end
 
     def get_previous_by_time
-      get_previous_versions.sort { |a, b| a[:time] <=> b[:time] }
+      get_previous_versions.sort_by { |a| a[:time] }
     end
 
     def get_previous_versions
       Dir["#{path}/../*"].each_with_object([]) do |dir, array|
         next if dir =~ /#{current_dir}$/
         version, revision = File.join(dir, 'VERSION'), File.join(dir, 'REVISION')
-        array << stats_hash(version: version, revision: revision) if File.exists?(version) && File.exists?(revision)
+        array << stats_hash(version: version, revision: revision) if File.exist?(version) && File.exist?(revision)
       end
     end
 
@@ -64,13 +64,9 @@ module Ops
       File.stat(file).mtime
     end
 
-    def file_root
-      @file_root
-    end
+    attr_reader :file_root
 
-    def environment
-      @environment
-    end
+    attr_reader :environment
 
     def development?
       environment == 'development'
@@ -81,7 +77,7 @@ module Ops
     end
 
     def version_file?
-      File.exists? version_file
+      File.exist? version_file
     end
 
     def revision_file
@@ -89,7 +85,7 @@ module Ops
     end
 
     def revision_file?
-      File.exists? revision_file
+      File.exist? revision_file
     end
 
     def deploy_date
@@ -106,20 +102,20 @@ module Ops
       @last_commit ||= if revision_file?
                          chomp revision_file
                        elsif development? && `git show` =~ /^commit (.*)$/
-                         $1
+                         Regexp.last_match(1)
                        else
                          'Unknown (REVISION file is missing)'
                        end
     end
 
     def headers
-      @headers.select{|k,v| k.match(/^[-A-Z_].*$/) }
+      @headers.select { |k, v| k.match(/^[-A-Z_].*$/) }
     end
 
     private
 
     def branch_source
-      @branch_source ||= ->{ `git branch` }
+      @branch_source ||= -> { `git branch` }
     end
   end
 end

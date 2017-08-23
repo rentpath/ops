@@ -1,6 +1,6 @@
 module Ops
   class Config
-    def initialize(data={})
+    def initialize(data = {})
       @data = {}
       update!(data)
     end
@@ -16,16 +16,16 @@ module Ops
     end
 
     def []=(key, value)
-      if value.class == Hash
-        @data[key.to_sym] = Config.new(value)
-      else
-        @data[key.to_sym] = value
-      end
+      @data[key.to_sym] = if value.class == Hash
+                            Config.new(value)
+                          else
+                            value
+                          end
     end
 
-    def method_missing(sym, *args)
+    def method_missing(sym, *args) # rubocop:disable Style/MethodMissing
       if sym.to_s =~ /(.+)=$/
-        self[$1] = args.first
+        self[Regexp.last_match(1)] = args.first
       else
         self[sym]
       end

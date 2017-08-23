@@ -4,46 +4,46 @@ describe Ops::Heartbeat do
   describe '#add' do
     it 'accepts new heartbeats' do
       @heartbeat = Ops::Heartbeat.new
-      @heartbeat.add(:test){ true }
-      @heartbeat.heartbeats.should have(1).items
+      @heartbeat.add(:test) { true }
+      expect(@heartbeat.heartbeats.size).to eq(1)
     end
   end
 
   describe '#check' do
     before do
       @heartbeat = Ops::Heartbeat.new
-      @heartbeat.add(:test){ true }
+      @heartbeat.add(:test) { true }
     end
 
     it 'returns true for valid heartbeats' do
-      @heartbeat.check(:test).should eq(true)
+      expect(@heartbeat.check(:test)).to eq(true)
     end
 
     it 'returns false for invalid heartbeats' do
-      @heartbeat.check(:invalid_test).should eq(false)
+      expect(@heartbeat.check(:invalid_test)).to eq(false)
     end
   end
 
   describe '#heartbeats' do
     it 'returns a hash of heartbeats' do
-      Ops::Heartbeat.new.heartbeats.should be_a Hash
+      expect(Ops::Heartbeat.new.heartbeats).to be_a Hash
     end
   end
 
-  it "offers a singleton" do
+  it 'offers a singleton' do
     @heartbeat = Ops::Heartbeat.instance
-    @heartbeat.object_id.should be Ops::Heartbeat.instance.object_id
+    expect(@heartbeat.object_id).to be Ops::Heartbeat.instance.object_id
   end
 
   it "checks singleton's heartbeats" do
-    Ops::Heartbeat.instance.add(:test){ true }
-    Ops::Heartbeat.check(:test).should be true
+    Ops::Heartbeat.instance.add(:test) { true }
+    expect(Ops::Heartbeat.check(:test)).to be true
   end
 end
 
 describe Ops do
-  it "provides convenience method to add heartbeats" do
-    Ops.add_heartbeat(:convenience){ true }
-    Ops::Heartbeat.check(:convenience).should be true
+  it 'provides convenience method to add heartbeats' do
+    Ops.add_heartbeat(:convenience) { true }
+    expect(Ops::Heartbeat.check(:convenience)).to be true
   end
 end

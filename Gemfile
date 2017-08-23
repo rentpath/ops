@@ -3,14 +3,15 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'rake'
+  gem 'pry'
+  gem 'rack-test'
   gem 'rails'
   gem 'rails-api'
+  gem 'rake'
   gem 'rspec'
-  gem 'rack-test'
-  gem 'pry'
+  gem 'rubocop', require: false
 end
 
 group :test do
-  gem "simplecov", require: false
+  gem 'simplecov', require: false
 end

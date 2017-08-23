@@ -7,8 +7,7 @@ module Demo
     end
 
     get '/test' do
-      "Still me, the demo app."
+      'Still me, the demo app.'
     end
-
   end
 end

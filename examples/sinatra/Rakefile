@@ -3,13 +3,13 @@ $LOAD_PATH.unshift File.dirname(__FILE__) unless $LOAD_PATH.include?(File.dirnam
 
 require 'rspec/core/rake_task'
 
-desc "Start the demo using `rackup`"
-task :start do 
-  exec "rackup config.ru"
+desc 'Start the demo using `rackup`'
+task :start do
+  exec 'rackup config.ru'
 end
 
 task default: [:start]
 
 RSpec::Core::RakeTask.new('test:ops') do |test|
-  test.pattern = "spec/functional/*_spec.rb"
+  test.pattern = 'spec/functional/*_spec.rb'
 end

@@ -1,6 +1,6 @@
 module Ops
   module Helpers
-    GITHUB_ORG_LINK = 'https://github.com/rentpath'
+    GITHUB_ORG_LINK = 'https://github.com/rentpath'.freeze
 
     def hostname
       @hostname ||= `/bin/hostname` || 'Unknown'
@@ -30,21 +30,9 @@ module Ops
     end
 
     def github_link(resource, subresource)
-      "<a href='#{GITHUB_ORG_LINK}/#{repo_name}/#{resource}/#{subresource}'>#{subresource}</a>" unless subresource =~ /^Unknown/
-    end
-
-    def print_detail(object, indent = 0)
-      output = ""
-      if object.kind_of? Hash
-        output << "{\n"
-        output << object.collect { |key, value|
-          "  " * indent + "  #{print_detail key} => #{print_detail value, indent+1}"
-        }.join(",\n") << "\n"
-        output << "  " * indent + "}"
-      else
-        output << object.inspect
+      unless subresource =~ /^Unknown/
+        "<a href='#{GITHUB_ORG_LINK}/#{repo_name}/#{resource}/#{subresource}'>#{subresource}</a>"
       end
-      output
     end
   end
 end
