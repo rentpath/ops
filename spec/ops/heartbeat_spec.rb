@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Ops::Heartbeat do
+RSpec.describe Ops::Heartbeat do
   describe '#add' do
     it 'accepts new heartbeats' do
       @heartbeat = Ops::Heartbeat.new

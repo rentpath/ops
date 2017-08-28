@@ -10,6 +10,15 @@ require 'ops'
 require 'rack/test'
 require 'pry'
 
+def app
+  @app ||= Rack::Builder.parse_file(File.expand_path('../support/config.ru', __FILE__)).first
+end
+
+Ops.setup do |config|
+  config.file_root = File.expand_path('../support/sample_deploy/', __FILE__)
+  config.environment = ENV['RACK_ENV']
+end
+
 RSpec.configure do |config|
   config.include Rack::Test::Methods
 
@@ -26,8 +35,4 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
   end
-end
-
-def app
-  @app ||= Rack::Builder.parse_file(File.expand_path('../support/config.ru', __FILE__)).first
 end

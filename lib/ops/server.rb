@@ -4,9 +4,7 @@ require 'json'
 
 module Ops
   class Server < Sinatra::Base
-    dir = File.dirname(File.expand_path('', __FILE__))
-    set :views, "#{dir}/server/views"
-    # set :views, File.dirname(File.expand_path('/../server/views', __FILE__))
+    set :views, "#{File.dirname(File.expand_path('', __FILE__))}/server/views"
 
     helpers Ops::Helpers
 
@@ -14,11 +12,10 @@ module Ops
       env.each_with_object({}) { |(k, v), headers| headers[k] = v }
     end
 
-    def jsonified_version(version, previous_versions, headers)
+    def jsonified_version(version, headers)
       JSON.generate(
-        version: version.version_or_branch,
-        revision: version.last_commit,
-        previous_versions: previous_versions,
+        info: version.info,
+        previous_info: version.previous_info,
         headers: headers
       )
     end
@@ -34,12 +31,11 @@ module Ops
 
     get '/version/?:format?', provides: %i(html json) do
       @version = Revision.new(request_headers)
-      @previous_versions = @version.previous_versions
       @headers = @version.headers
 
       if json_request?
         content_type 'application/json'
-        return jsonified_version(@version, @previous_versions, @headers)
+        return jsonified_version(@version, @headers)
       end
 
       erb :version
