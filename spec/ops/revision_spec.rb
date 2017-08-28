@@ -19,21 +19,21 @@ describe Ops::Revision do
 
   it 'test env should have version' do
     create_version_file
-    expect(@version.version_or_branch).to eq('v23.24.25')
+    @version.version_or_branch.should eq('v23.24.25')
   end
 
   it 'development env should have branch' do
     dev_settings = double('settings', file_root: @root, environment: 'development')
     dev_version = Ops::Revision.new({}, dev_settings)
     dev_version.branch_source = -> { "* dev\nsome-topic-branch\nother-topic-branch" }
-    expect(dev_version.version_or_branch).to eq('dev')
+    dev_version.version_or_branch.should eq('dev')
   end
 
   it 'should have request headers' do
     headers = {'ABC' => '123', 'hidden' => 'x'}
     settings = double('settings', file_root: @root, environment: 'test')
     version = Ops::Revision.new(headers, settings)
-    expect(version.headers).to eq('ABC' => '123')
+    version.headers.should eq('ABC' => '123')
   end
 
   # TODO: add tests for json and previous_version
