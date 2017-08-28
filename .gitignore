@@ -4,10 +4,7 @@
 .bundle
 .DS_Store
 .tags
-coverage
-coverage.data
-pkg
-rdoc
-log
 tags
 vendor
+log
+*.gem

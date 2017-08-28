@@ -45,6 +45,7 @@ GEM
     arel (6.0.4)
     ast (2.3.0)
     builder (3.2.3)
+    byebug (9.1.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
     diff-lcs (1.3)
@@ -74,6 +75,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.5.0)
+      byebug (~> 9.1)
+      pry (~> 0.10)
     rack (1.6.8)
     rack-protection (1.5.3)
       rack
@@ -159,7 +163,7 @@ PLATFORMS
 
 DEPENDENCIES
   ops!
-  pry
+  pry-byebug
   rack-test
   rails
   rails-api
