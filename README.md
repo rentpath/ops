@@ -16,8 +16,6 @@ This gem provides standardized support for obtaining environment, version, and h
   - [Running tests](#running-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-
 **You will likely want to block or restrict access to the following routes:**
 
 Route         | Notes
