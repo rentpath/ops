@@ -10,6 +10,7 @@ group :development, :test do
   gem 'rake'
   gem 'rspec'
   gem 'rubocop', require: false
+  gem 'rubocop-performance', require: false
 end
 
 group :test do
