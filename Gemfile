@@ -5,7 +5,7 @@ gemspec
 group :development, :test do
   gem 'pry-byebug'
   gem 'rack-test'
-  gem 'rails'
+  gem 'rails', '>= 4.2.11.3'
   gem 'rails-api'
   gem 'rake'
   gem 'rspec'
