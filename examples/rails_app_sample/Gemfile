@@ -1,5 +1,0 @@
-source 'https://rubygems.org'
-
-gem 'ops', path: '../../../ops'
-gem 'rails'
-gem 'rspec'

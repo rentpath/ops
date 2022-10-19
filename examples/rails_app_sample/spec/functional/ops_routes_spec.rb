@@ -1,1 +1,0 @@
-../../../../spec/functional/ops_routes_spec.rb
