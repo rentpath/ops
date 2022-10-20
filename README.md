@@ -8,22 +8,23 @@ This gem provides standardized support for obtaining environment, version, and h
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Installation](#installation)
-  - [For Rails apps:](#for-rails-apps)
-  - [For Sinatra apps:](#for-sinatra-apps)
-- [Adding Custom Heartbeats](#adding-custom-heartbeats)
-- [The Configuration Service Adapter (Optional)](#the-configuration-service-adapter-optional)
-  - [Running tests](#running-tests)
+- [Ops](#ops)
+  - [Installation](#installation)
+    - [For Rails apps:](#for-rails-apps)
+    - [For Sinatra apps:](#for-sinatra-apps)
+  - [Adding Custom Heartbeats](#adding-custom-heartbeats)
+  - [The Configuration Service Adapter (Optional)](#the-configuration-service-adapter-optional)
+    - [Running tests](#running-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 
 **You will likely want to block or restrict access to the following routes:**
 
-Route         | Notes
---------------| -----
-`/ops/env`    | Exposes all of your environment variables (e.g. any API keys set as environment variables) to the public
-`/ops/config` | Exposes all of your configuration keys and values to the public (if you're using a configuration service).
+| Route         | Notes                                                                                                      |
+| ------------- | ---------------------------------------------------------------------------------------------------------- |
+| `/ops/env`    | Exposes all of your environment variables (e.g. any API keys set as environment variables) to the public   |
+| `/ops/config` | Exposes all of your configuration keys and values to the public (if you're using a configuration service). |
 
 Typical usage:
 

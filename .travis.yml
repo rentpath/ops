@@ -1,8 +1,0 @@
-language: ruby
-rvm:
-  - 2.2
-  - 2.4
-install:
-  - bundle install --path vendor
-script:
-  - script/test

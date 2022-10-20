@@ -1,0 +1,33 @@
+name: CI
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  cancel-previous-runs:
+    name: Cancel Previous Runs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+  unit-test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        cache-version: 1
+    - run: |
+        bundle exec rspec
+      shell: bash
