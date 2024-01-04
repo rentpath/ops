@@ -5,8 +5,6 @@ gemspec
 group :development, :test do
   gem 'pry-byebug'
   gem 'rack-test'
-  gem 'rails'
-  gem 'rails-api'
   gem 'rake'
   gem 'rspec'
   gem 'rubocop', require: false
