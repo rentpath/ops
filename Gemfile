@@ -4,7 +4,7 @@ gemspec
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'rack-test'
+  gem 'rack-test', '~> 2.1'
   gem 'rake'
   gem 'rspec'
   gem 'rubocop', require: false
