@@ -8,13 +8,13 @@ module Ops
 
     def app_name
       @app_name ||= begin
-                      dirs = Dir.pwd.split('/')
-                      if dirs.last =~ /^\d+$/
-                        dirs[-3]
-                      else
-                        dirs.last
-                      end.sub(/\.com$/, '')
-                    end
+        dirs = Dir.pwd.split('/')
+        if /^\d+$/.match?(dirs.last)
+          dirs[-3]
+        else
+          dirs.last
+        end.sub(/\.com$/, '')
+      end
     end
 
     def version_link(version)
@@ -30,7 +30,7 @@ module Ops
     end
 
     def github_link(resource, subresource)
-      unless subresource =~ /^Unknown/
+      unless /^Unknown/.match?(subresource)
         "<a href='#{GITHUB_ORG_LINK}/#{repo_name}/#{resource}/#{subresource}'>#{subresource}</a>"
       end
     end

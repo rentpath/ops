@@ -4,7 +4,7 @@ require 'json'
 
 module Ops
   class Server < Sinatra::Base
-    set :views, "#{File.dirname(File.expand_path('', __FILE__))}/server/views"
+    set :views, "#{File.dirname(File.expand_path(__FILE__))}/server/views"
 
     helpers Ops::Helpers
 
@@ -21,7 +21,7 @@ module Ops
     end
 
     def json_request?
-      !!Array(params['format'] || request.accept).detect { |f| f.to_s =~ /json/ }
+      !!Array(params['format'] || request.accept).detect { |f| f.to_s.include?('json') }
     end
 
     get '/env/?' do

@@ -16,14 +16,14 @@ module Ops
     end
 
     def []=(key, value)
-      @data[key.to_sym] = if value.class == Hash
+      @data[key.to_sym] = if value.instance_of?(Hash)
                             Config.new(value)
                           else
                             value
                           end
     end
 
-    def method_missing(sym, *args) # rubocop:disable Style/MethodMissing
+    def method_missing(sym, *args) # rubocop:disable Style/MissingRespondToMissing
       if sym.to_s =~ /(.+)=$/
         self[Regexp.last_match(1)] = args.first
       else

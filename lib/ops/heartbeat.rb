@@ -10,7 +10,7 @@ module Ops
       end
 
       def instance
-        @singleton ||= new
+        @instance ||= new
       end
     end
 
@@ -23,10 +23,10 @@ module Ops
     end
 
     def check(name)
-      return heartbeats[name.to_sym].call
+      heartbeats[name.to_sym].call
     rescue StandardError => e
-      puts "Error: #{e}\n#{e.backtrace[2..-1].join("\n")}" unless heartbeats[name.to_sym].nil?
-      return false
+      puts "Error: #{e}\n#{e.backtrace[2..].join("\n")}" unless heartbeats[name.to_sym].nil?
+      false
     end
   end
 
