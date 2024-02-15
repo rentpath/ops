@@ -2,15 +2,13 @@ require 'yaml'
 
 module Ops
   class Revision
-    attr_reader :file_root
+    attr_reader :environment, :file_root
 
     def initialize(new_headers = {}, opts = Ops.config)
       @file_root = opts.file_root.to_s # convert to string in case they pass us a Pathname
       @environment = opts.environment
       @headers = new_headers
     end
-
-    attr_reader :environment
 
     def headers
       @headers.select { |k, v| k.match(/^[-A-Z_].*$/) }

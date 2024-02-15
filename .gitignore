@@ -3,6 +3,7 @@
 *.sublime-workspace
 .bundle
 .DS_Store
+.rubocop-https---raw-githubusercontent-com-rentpath-style-guides-master-ruby--rubocop-yml
 .tags
 coverage
 coverage.data

@@ -8,7 +8,7 @@ script/setup
 
 echo "===> Running rubocop linter"
 if [ -n "$1" ] && [ "$1" = "-a" ]; then
-  auto_correct="--auto-correct"
+  auto_correct="--autocorrect"
 fi
 
 bundle exec rubocop -D $auto_correct

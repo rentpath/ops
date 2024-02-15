@@ -2,7 +2,8 @@
 This gem provides standardized support for obtaining environment, version, and heartbeat information from Sinatra or Rails-based web applications.
 
 [![Code Climate](https://codeclimate.com/github/primedia/ops.png)](https://codeclimate.com/github/primedia/ops)
-[![Build Status](https://travis-ci.org/rentpath/ops.svg?branch=master)](https://travis-ci.org/rentpath/ops)
+[![Build Status](https://github.com/rentpath/ops/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/rentpath/ops/actions/workflows/ci.yml)
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->

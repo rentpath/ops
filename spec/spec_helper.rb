@@ -11,12 +11,12 @@ require 'rack/test'
 require 'pry'
 
 def app
-  @app ||= Rack::Builder.parse_file(File.expand_path('../support/config.ru', __FILE__)).first
+  @app ||= Rack::Builder.parse_file(File.expand_path('support/config.ru', __dir__)).first
 end
 
 Ops.setup do |config|
-  config.file_root = File.expand_path('../support/sample_deploy/', __FILE__)
-  config.environment = ENV['RACK_ENV']
+  config.file_root = File.expand_path('support/sample_deploy', __dir__)
+  config.environment = ENV.fetch('RACK_ENV', nil)
 end
 
 RSpec.configure do |config|
